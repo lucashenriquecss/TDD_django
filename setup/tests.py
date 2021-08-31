@@ -4,14 +4,34 @@ from selenium import webdriver
 class AnimaisTestCase(LiveServerTestCase):
 
     def setUp(self):
-        self.browser = webdriver.Chrome('/Users/calhe/Documents/GitHub/TDD_django/chromedriver.exe')
+        self.browser = webdriver.Chrome('/Users/calhe/Documents/GitHub/TDD_django/chromedriver')
 
     def tearDown(self):#fechar aba do chrome ao fazer todos od testes
         self.browser.quit()
 
-    def open_windowbrowser(self):
-        self.browser.get(self.live_server_url)
+    
+        
 
-    def test_de_falha(self):
-        """ Exemplo de teste de erro"""
-        self.fail('Teste falhou!!')
+    def test_buscando_um_novo_animal(self):
+        """
+        Teste se um usuário encontra um animal pesquisando
+        """
+        # Vini, deseja encontrar um novo animal,
+        # para adotar.
+
+        # Ele encontra o Busca Animal e decide usar o site,
+        home_page = self.browser.get(self.live_server_url + '/')
+        # porque ele vê no menu do site escrito Busca Animal.
+        brand_element = self.browser.find_element_by_css_selector('.navbar')
+        self.assertEqual('Busca Animal', brand_element.text)
+        
+        # Ele vê um campo para pesquisar animais pelo nome. 
+        buscar_animal_input = self.browser.find_element_by_css_selector('input#buscar-animal')
+        self.assertEqual(buscar_animal_input.get_attribute('placeholder'), 'Exemplo: Leão')
+        # Ele pesquisa por Leão e clica no botão pesquisar.
+
+        # O site exibe 4 caracteristicas do animal pesquisado.
+    
+        # Ele desiste de adotar um leão.
+        pass
+        
