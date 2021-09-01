@@ -1,10 +1,16 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
-
+from animals.models import Animal
 class AnimaisTestCase(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome('/Users/calhe/Documents/GitHub/TDD_django/chromedriver')
+        self.animal = Animal.objects.create(
+            nome_animal = 'leão',
+            predador = 'Sim',
+            venenoso = 'Não',
+            domestico = 'Não'
+        )
 
     def tearDown(self):#fechar aba do chrome ao fazer todos od testes
         self.browser.quit()
@@ -35,5 +41,5 @@ class AnimaisTestCase(LiveServerTestCase):
         caracteristicas = self.browser.find_elements_by_css_selector('.result-description')
         self.assertGreater(len(caracteristicas), 3)
         # Ele desiste de adotar um leão.
-        pass
+    
         
